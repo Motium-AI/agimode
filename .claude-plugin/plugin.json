@@ -18,5 +18,5 @@
     "worktree"
   ],
   "skills": "./config/skills/",
-  "hooks": "./config/settings.json"
+  "hooks": "./config/hooks/agimode-hooks.json"
 }
