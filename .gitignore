@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Local Claude Code state (never ship a user's live state)
+.claude/
+*.log

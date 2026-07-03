@@ -1,0 +1,88 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/run-python-hook.sh\" \"$HOME/.claude/hooks/agimode-session-surface.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/run-python-hook.sh\" \"$HOME/.claude/hooks/agimode-session-surface.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/run-python-hook.sh\" \"$HOME/.claude/hooks/fable-subagent-model-guard.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/run-python-hook.sh\" \"$HOME/.claude/hooks/fable-delegation-advisor.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/run-python-hook.sh\" \"$HOME/.claude/hooks/fable-delegation-advisor.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/run-python-hook.sh\" \"$HOME/.claude/hooks/fable-delegation-advisor.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/run-python-hook.sh\" \"$HOME/.claude/hooks/fable-delegation-advisor.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/run-python-hook.sh\" \"$HOME/.claude/hooks/codex-background-enforcer.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

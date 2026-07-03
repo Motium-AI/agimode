@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "agimode",
+  "displayName": "agimode",
+  "version": "0.1.0",
+  "description": "Orchestrator-only mode delegating execution to a worktree-isolated coding-agent fleet — codex or Claude.",
+  "author": {
+    "name": "Motium-AI"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Motium-AI/agimode",
+  "repository": "https://github.com/Motium-AI/agimode",
+  "keywords": [
+    "agimode",
+    "orchestrator",
+    "codex",
+    "fleet",
+    "worktree"
+  ],
+  "skills": "./config/skills/",
+  "hooks": "./config/settings.json"
+}

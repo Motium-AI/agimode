@@ -1,0 +1,21 @@
+[project]
+name = "agimode"
+version = "0.1.0"
+description = "Orchestrator-only Claude Code mode delegating execution to a worktree-isolated coding-agent fleet (codex or Claude)."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Motium-AI" }]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.4",
+    "ruff==0.15.1",
+]
+
+# Ruff configuration lives in config/references/ruff-strict.toml (the single
+# source of truth also used by install.sh --verify and CI). Invoke it via:
+#   ruff check --config config/references/ruff-strict.toml .
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

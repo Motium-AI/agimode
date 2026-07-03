@@ -1,0 +1,78 @@
+name: CI
+
+# Lint + test gate for the agimode plugin.
+#
+# Lint is scoped to CHANGED Python files (touched-scope), not the whole tree.
+# The upstream toolkit this plugin was extracted from carries pre-existing
+# ruff-strict debt in test fixtures (e.g. import-order in conftest.py helpers)
+# that predate this repo and are out of scope to rewrite here — a full-tree
+# lint would be red on arrival. Touched-scope keeps the gate meaningful (no
+# NEW debt lands) without demanding an unrelated full-repo rewrite.
+#
+# Tests always run the full hermetic hook suite — it creates its own tmp
+# .claude/ state and does not depend on anything outside this repo.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Ruff (changed files, strict)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install ruff
+        run: python -m pip install ruff==0.15.1
+      - name: Lint this PR's/push's changed Python files
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base='${{ github.event.pull_request.base.sha }}'
+            head='${{ github.event.pull_request.head.sha }}'
+            range="$base...$head"
+          else
+            before='${{ github.event.before }}'
+            after='${{ github.event.after }}'
+            if [ -z "$before" ] || [ "$before" = "0000000000000000000000000000000000000000" ]; then
+              echo "No previous commit to diff against (branch created / force-pushed) — nothing to lint."
+              exit 0
+            fi
+            range="$before...$after"
+          fi
+
+          files=$(git diff --diff-filter=ACMR --name-only "$range" \
+                  -- 'config/hooks/*.py' 'config/skills/*.py' 'config/skills/**/*.py' || true)
+
+          if [ -z "$files" ]; then
+            echo "No changed Python files under config/hooks or config/skills — nothing to lint."
+            exit 0
+          fi
+          echo "Linting changed files:"; echo "$files"
+          echo "$files" | xargs ruff check --config config/references/ruff-strict.toml
+
+  test:
+    name: Pytest (hermetic hook suite)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install pytest
+        run: python -m pip install pytest==8.3.4
+      - name: Run hook test suite
+        run: python -m pytest config/hooks/tests -q

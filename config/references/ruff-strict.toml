@@ -1,0 +1,38 @@
+# Namshub strict ruff config — shipped with the toolkit.
+# Used via: ruff check --config /path/to/this/ruff-strict.toml .
+# Never modifies the user's project files.
+
+line-length = 100
+target-version = "py39"
+
+[lint]
+select = [
+    "F",     # Pyflakes — logic errors, undefined names, unused imports
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "B",     # flake8-bugbear — common bugs and design issues
+    "UP",    # pyupgrade — modern Python syntax
+    "C4",    # flake8-comprehensions — correct comprehension usage
+    "SIM",   # flake8-simplify — code simplification
+    "C90",   # McCabe complexity
+    "I",     # isort — import sorting
+    "RUF",   # Ruff-specific rules (includes unicorn-equivalent patterns)
+    "PERF",  # Perflint — performance anti-patterns
+    "FURB",  # refurb — modern Python idioms
+    "PIE",   # flake8-pie — misc linting
+    "T20",   # flake8-print — no print() in production code
+    "ERA",   # eradicate — commented-out code detection
+]
+ignore = [
+    "E501",    # line too long (formatter handles this)
+]
+fixable = ["ALL"]
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.per-file-ignores]
+"test_*.py" = ["S101", "T20"]
+"**/tests/**/*.py" = ["S101", "T20"]
+"conftest.py" = ["F401"]
+"__init__.py" = ["F401"]
