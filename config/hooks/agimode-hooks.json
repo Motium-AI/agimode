@@ -1,0 +1,88 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/config/hooks/run-python-hook.sh\" \"${CLAUDE_PLUGIN_ROOT}/config/hooks/agimode-session-surface.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/config/hooks/run-python-hook.sh\" \"${CLAUDE_PLUGIN_ROOT}/config/hooks/agimode-session-surface.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/config/hooks/run-python-hook.sh\" \"${CLAUDE_PLUGIN_ROOT}/config/hooks/fable-subagent-model-guard.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/config/hooks/run-python-hook.sh\" \"${CLAUDE_PLUGIN_ROOT}/config/hooks/fable-delegation-advisor.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/config/hooks/run-python-hook.sh\" \"${CLAUDE_PLUGIN_ROOT}/config/hooks/fable-delegation-advisor.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/config/hooks/run-python-hook.sh\" \"${CLAUDE_PLUGIN_ROOT}/config/hooks/fable-delegation-advisor.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/config/hooks/run-python-hook.sh\" \"${CLAUDE_PLUGIN_ROOT}/config/hooks/fable-delegation-advisor.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/config/hooks/run-python-hook.sh\" \"${CLAUDE_PLUGIN_ROOT}/config/hooks/codex-background-enforcer.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
